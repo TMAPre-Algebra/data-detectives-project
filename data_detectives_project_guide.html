@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Detectives — Project Guide</title>
+<style>
+ :root{--ink:#1d2330;--muted:#5b6678;--accent:#2557a7;--accent2:#e8632a;--gold:#c8860a;--bg:#f4f6fb;--card:#fff;
+   --line:#d3dae8;--soft:#eef3fb;--good:#1f8a4c;--fs:1}
+ :root.hc{--ink:#000;--muted:#000;--accent:#0030c0;--accent2:#b03000;--gold:#8a5a00;--bg:#fff;--card:#fff;--line:#000;--soft:#fff;--good:#006b2e}
+ *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);
+   font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;line-height:1.45;font-size:calc(1rem*var(--fs));
+   -webkit-text-size-adjust:100%;padding-bottom:40px}
+ header.top{background:var(--accent);color:#fff;padding:16px 16px 18px}
+ .wrap{max-width:760px;margin:0 auto;padding:0 16px}
+ header.top h1{margin:0;font-size:calc(1.5rem*var(--fs))}
+ header.top p{margin:6px 0 0;opacity:.95}
+ .tools{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+ .tools button{font-family:inherit;cursor:pointer;border:0;border-radius:8px;padding:6px 10px;font-weight:700;
+   background:rgba(255,255,255,.2);color:#fff;font-size:calc(.85rem*var(--fs))}
+ .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;break-inside:avoid}
+ h2{color:var(--accent);font-size:calc(1.2rem*var(--fs));margin:0 0 8px}
+ .mission{background:var(--soft);border:1px solid var(--line)}
+ ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s}
+ ol.steps li{counter-increment:s;position:relative;padding:8px 0 8px 44px;border-bottom:1px solid var(--line)}
+ ol.steps li:last-child{border-bottom:0}
+ ol.steps li:before{content:counter(s);position:absolute;left:0;top:7px;width:30px;height:30px;border-radius:50%;
+   background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+ ol.steps b{color:var(--ink)}
+ table.sched{width:100%;border-collapse:collapse}
+ table.sched td,table.sched th{border:1px solid var(--line);padding:7px 10px;text-align:left;font-size:calc(.95rem*var(--fs));vertical-align:top}
+ table.sched th{background:var(--soft);color:var(--accent)}
+ table.sched .day{font-weight:800;white-space:nowrap;color:var(--accent)}
+ table.sched tr.work td{background:#fff7ed}
+ table.sched tr.due td{background:#eefbf2;font-weight:700}
+ ul.tips{margin:4px 0;padding-left:20px} ul.tips li{margin:4px 0}
+ .formats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ @media(max-width:560px){.formats{grid-template-columns:1fr}}
+ .fmt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--soft)}
+ .fmt b{color:var(--accent2)}
+ .check{list-style:none;padding-left:0;margin:6px 0}
+ .check li{padding:4px 0 4px 30px;position:relative}
+ .check li:before{content:"";position:absolute;left:0;top:5px;width:18px;height:18px;border:2px solid var(--accent);border-radius:4px}
+ table.rub{width:100%;border-collapse:collapse}
+ table.rub td,table.rub th{border:1px solid var(--line);padding:7px 10px;vertical-align:top;font-size:calc(.93rem*var(--fs))}
+ table.rub th{background:var(--soft);color:var(--accent);text-align:left}
+ table.rub .pts{text-align:center;font-weight:800;color:var(--good);white-space:nowrap}
+ table.rub tr.bonus td{background:#fffdf3}
+ .pill{display:inline-block;background:var(--accent2);color:#fff;border-radius:999px;padding:2px 10px;font-size:calc(.8rem*var(--fs));font-weight:700}
+ footer{color:var(--muted);text-align:center;margin-top:22px;font-size:calc(.82rem*var(--fs))}
+ @media print{ @page{margin:11mm} header.top{background:#fff;color:#000;border-bottom:2px solid #000}
+   .tools{display:none!important} body{background:#fff} .card{break-inside:avoid;border-color:#999} }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1>🔎 Data Detectives</h1>
+  <p>Data All Around Us · a math project · presentations Nov 10–11</p>
+  <div class="tools"><button id="aBig">A+ Bigger text</button> <button id="hc">◐ High contrast</button>
+    <button id="printBtn">📄 Print / Save as PDF</button></div>
+</div></header>
+
+<main class="wrap">
+  <section class="card mission">
+    <h2>Your Mission</h2>
+    <p>You are a <b>Data Detective</b>. Pick a question about the world around you. Then collect <b>real data</b> to answer it,
+      find out what the numbers say, and share your discovery with the class. You will work on your <b>own</b>, and you get to
+      choose how you present. The most important part is collecting <b>good data</b> — so we give it real time, not just one day.</p>
+  </section>
+
+  <section class="card">
+    <h2>What You Will Do</h2>
+    <ol class="steps">
+      <li><b>Pick your question.</b> Choose something you can count or measure.</li>
+      <li><b>Make a collection plan.</b> Decide what data you need, who or where it comes from, and how many (aim for <b>10 or more</b>).</li>
+      <li><b>Collect your data.</b> Gather it over a few days. Write each number down right away.</li>
+      <li><b>Put your data in order.</b> Line the numbers up from smallest to biggest.</li>
+      <li><b>Find the center.</b> Figure out the <b>mean, median, and mode</b>. Show your work.</li>
+      <li><b>Round &amp; estimate.</b> Round your mean, and write one “about” sentence.</li>
+      <li><b>Make a chart.</b> Build a bar chart of your data.</li>
+      <li><b>Write your data story.</b> Say what you found in 2–3 sentences.</li>
+      <li><b>Choose how to share, and present.</b></li>
+    </ol>
+    <p style="margin:10px 0 0;color:var(--muted)">You will do Steps 1–8 in your <b>Data Workbook</b> (on paper or on the computer).</p>
+  </section>
+
+  <section class="card">
+    <h2>Our Schedule</h2>
+    <table class="sched">
+      <tr><th>Day</th><th>What we do</th></tr>
+      <tr><td class="day">Fri 10/30</td><td><b>Launch &amp; plan.</b> Pick your question and make your collection plan. Start gathering data.</td></tr>
+      <tr><td class="day">Mon 11/2</td><td><b>Collection day.</b> Gather your data (ask people, count, or measure) and put it in your table.</td></tr>
+      <tr><td class="day">Tue 11/3</td><td><b>Data check.</b> Show Mr. Martin your data (10+). Then start finding the mean, median, and mode.</td></tr>
+      <tr><td class="day">Wed 11/4</td><td>Finish the <b>mean, median, and mode</b>.</td></tr>
+      <tr><td class="day">Thu 11/5</td><td>Make your <b>chart</b>; <b>round &amp; estimate</b>.</td></tr>
+      <tr><td class="day">Fri 11/6</td><td>Write your <b>data story</b> and plan your presentation.</td></tr>
+      <tr class="work"><td class="day">Mon 11/9</td><td><span class="pill">Work day</span> Mr. Martin is out. <b>Finish and practice your presentation</b> on your own (see the checklist below).</td></tr>
+      <tr><td class="day">Tue 11/10</td><td><b>Presentations — Day 1.</b></td></tr>
+      <tr class="due"><td class="day">Wed 11/11</td><td>★ <b>Presentations — Day 2</b> + class celebration. Project is due!</td></tr>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>How to Collect Good Data</h2>
+    <ul class="tips">
+      <li>Pick a question you can really get numbers for.</li>
+      <li>Decide <b>who or what</b> you will measure, and <b>how many</b> (10 or more).</li>
+      <li>Ask the same question the same way every time, so it is fair.</li>
+      <li>Write each number down as soon as you get it.</li>
+      <li>Keep going until you have at least 10 pieces of data.</li>
+    </ul>
+    <p style="margin:8px 0 0;color:var(--muted)">Examples: how many pets each person has · minutes we read each night · how tall we are in cm · favorite number of something you can count.</p>
+  </section>
+
+  <section class="card">
+    <h2>Choose How to Share</h2>
+    <p style="margin:0 0 10px;color:var(--muted)">Pick the one that sounds the most fun to you. You present on Nov 10 or 11.</p>
+    <div class="formats">
+      <div class="fmt"><b>📊 Poster</b><br>Put your chart and results on one big page.</div>
+      <div class="fmt"><b>💻 Slideshow</b><br>Make a few slides and show them to the class.</div>
+      <div class="fmt"><b>🎤 Short talk</b><br>Hold up your workbook and tell us what you found (1–2 minutes).</div>
+      <div class="fmt"><b>✨ Your idea</b><br>Have another way in mind? Ask Mr. Martin.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="pill">Work Day</span> &nbsp;Monday, Nov 9 — on your own</h2>
+    <p style="margin:0 0 6px">Mr. Martin is out. Use the time to finish and practice. Check off each one:</p>
+    <ul class="check">
+      <li>All my data is in the table (10 or more).</li>
+      <li>Mean, median, and mode are done — with my work shown.</li>
+      <li>My chart is made and has a title and labels.</li>
+      <li>My data story is written (2–3 sentences).</li>
+      <li>My presentation is ready, and I practiced it once.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>How You Will Be Graded</h2>
+    <p style="margin:0 0 10px;color:var(--muted)">20 points total, plus a bonus star. Here is what makes a great project:</p>
+    <table class="rub">
+      <tr><th>What we look for</th><th class="pts">Points</th></tr>
+      <tr><td><b>Question &amp; data</b> — a clear question and 10+ real numbers, collected fairly and put in a neat table.</td><td class="pts">4</td></tr>
+      <tr><td><b>Mean, median, mode</b> — all three correct, with your work shown.</td><td class="pts">5</td></tr>
+      <tr><td><b>Round &amp; estimate</b> — you rounded correctly and wrote an “about” sentence.</td><td class="pts">3</td></tr>
+      <tr><td><b>Your chart</b> — clear bars, a title, and labels that match your data.</td><td class="pts">4</td></tr>
+      <tr><td><b>Data story</b> — 2–3 sentences telling what you found.</td><td class="pts">2</td></tr>
+      <tr><td><b>Presentation</b> — you shared your data story clearly with the class.</td><td class="pts">2</td></tr>
+      <tr class="bonus"><td><b>Level Up bonus</b> — compare two groups, add a second chart, or use a formula.</td><td class="pts">+1</td></tr>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Detective Tips</h2>
+    <ul class="tips">
+      <li>Pick a question you really want to know the answer to.</li>
+      <li>Always put your numbers <b>in order</b> before you find the median.</li>
+      <li>Check your chart: do the tallest bars match the biggest numbers?</li>
+      <li>Practice your presentation out loud at least once.</li>
+      <li>Stuck? Raise your hand — good detectives ask good questions!</li>
+    </ul>
+  </section>
+
+  <footer>Data Detectives · Talcott Mountain Academy · Pre-Algebra</footer>
+</main>
+<script>
+ var d=document.documentElement, fs=1;
+ function ap(){d.style.setProperty('--fs',fs.toFixed(2));}
+ document.getElementById('aBig').onclick=function(){fs=fs>=1.4?1:fs+0.15;ap();};
+ document.getElementById('hc').onclick=function(){d.classList.toggle('hc');};
+ document.getElementById('printBtn').onclick=function(){window.print();};
+</script>
+</body>
+</html>
