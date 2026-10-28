@@ -1,126 +1,214 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Data Detectives</title>
-<style>
-  :root {
-    --ink: #1d2330;
-    --muted: #5b6678;
-    --accent: #2557a7;
-    --accent2: #e8632a;
-    --bg: #f4f6fb;
-    --card: #ffffff;
-    --line: #d3dae8;
-    --soft: #eef3fb;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
-    line-height: 1.45;
-    padding: 0 16px 40px;
-  }
-  .wrap {
-    max-width: 860px;
-    margin: 0 auto;
-  }
-  header {
-    background: var(--accent);
-    color: white;
-    border-radius: 0 0 18px 18px;
-    margin-bottom: 22px;
-  }
-  .header-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 26px 18px 28px;
-  }
-  h1 {
-    margin: 0 0 8px;
-    font-size: clamp(2rem, 4vw, 2.7rem);
-  }
-  .tag {
-    margin: 0;
-    opacity: 0.95;
-    font-size: 1.05rem;
-  }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 18px 20px;
-    margin: 16px 0;
-  }
-  h2 {
-    margin-top: 0;
-    color: var(--accent);
-    font-size: clamp(1.3rem, 2vw, 1.7rem);
-  }
-  .link-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-    margin-top: 12px;
-  }
-  .link-box {
-    border: 1px solid var(--line);
-    background: var(--soft);
-    border-radius: 12px;
-    padding: 16px;
-  }
-  .link-box strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: var(--accent2);
-  }
-  a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 700;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  .meta {
-    color: var(--muted);
-    margin-top: 10px;
-  }
-  footer {
-    text-align: center;
-    color: var(--muted);
-    margin-top: 28px;
-    font-size: 0.9rem;
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Detectives | Project Hub</title>
+  <meta name="description" content="Data Detectives project guide and workbook for students.">
+  <style>
+    :root {
+      --navy: #1e3a8a;
+      --navy-deep: #132a66;
+      --blue: #2563eb;
+      --orange: #f97316;
+      --orange-soft: #fff3eb;
+      --bg: #f3f7ff;
+      --card: #ffffff;
+      --ink: #1f2937;
+      --muted: #5b6475;
+      --line: #dfeaf7;
+      --success: #1f8a4c;
+      --shadow: 0 10px 30px rgba(23, 44, 86, 0.10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, #f7f9fc 100%);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    .topbar {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 94px;
+      padding: 18px 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+    }
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.15);
+      font-size: 1.5rem;
+    }
+    .pill {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.25);
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+    main {
+      padding: 32px 0 60px;
+    }
+    .hero {
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px 28px 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy-deep);
+    }
+    .subtitle {
+      margin: 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 720px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+      margin-top: 28px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 20px;
+      box-shadow: 0 8px 18px rgba(17, 31, 62, 0.05);
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      color: var(--navy-deep);
+      font-size: 1.5rem;
+    }
+    .card p {
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--orange) 0%, #ff8b42 100%);
+      color: white;
+      border-radius: 12px;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 12px 24px rgba(249, 115, 22, 0.25);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(249, 115, 22, 0.3);
+      text-decoration: none;
+    }
+    .btn.secondary {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.24);
+    }
+    .meta-box {
+      margin-top: 26px;
+      background: linear-gradient(180deg, #fffdfb 0%, #fff3eb 100%);
+      border: 1px solid #f7d3b0;
+      border-radius: 18px;
+      padding: 18px 20px;
+      color: var(--ink);
+    }
+    .meta-box strong {
+      color: var(--navy-deep);
+    }
+    .small {
+      font-size: .92rem;
+      color: var(--muted);
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 0 20px 28px;
+      font-size: .9rem;
+    }
+    @media (max-width: 600px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 18px 0 20px;
+      }
+      .hero {
+        padding: 20px 18px 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <h1>🔎 Data Detectives</h1>
-      <p class="tag">Student Project Guide and Workbook</p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">🔎</span>
+        <span>Data Detectives</span>
+      </div>
+      <span class="pill">Project Hub</span>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="card">
-      <h2>Choose a page</h2>
-      <div class="link-grid">
-        <div class="link-box">
-          <strong>Project Guide</strong>
-          <a href="./data_detectives_project_guide.html">Open Project Guide</a>
-        </div>
-        <div class="link-box">
-          <strong>Data Workbook</strong>
-          <a href="./data_detectives_workbook.html">Open Data Workbook</a>
-        </div>
-      </div>
-      <p class="meta">Use this landing page to share one link with the student.</p>
+  <main class="container">
+    <section class="hero">
+      <h1>Explore the Data Detectives project</h1>
+      <p class="subtitle">Students can use this site to access the project guide and their workbook from one easy link. Everything is designed to work on a laptop, tablet, or phone and can be printed as a PDF.</p>
     </section>
+
+    <section class="cards">
+      <article class="card">
+        <h2>Project Guide</h2>
+        <p>Read the directions, schedule, rubric, and expectations for the full Data Detectives project.</p>
+        <a class="btn secondary" href="./data_detectives_project_guide.html">Open Project Guide</a>
+      </article>
+
+      <article class="card">
+        <h2>Data Workbook</h2>
+        <p>Students can type their question, collect their data, find the mean/median/mode, and create a chart.</p>
+        <a class="btn" href="./data_detectives_workbook.html">Open Workbook</a>
+      </article>
+    </section>
+
+    <div class="meta-box">
+      <strong>Student-friendly setup:</strong> Use this single homepage link to share both resources. The student can open the guide for instructions and the workbook for work submission.
+      <div class="small" style="margin-top:10px;">Designed for Talcott Mountain Academy Pre-Algebra.</div>
+    </div>
   </main>
 
   <footer>

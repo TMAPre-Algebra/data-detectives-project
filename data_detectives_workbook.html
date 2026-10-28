@@ -1,276 +1,656 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Data Detectives — My Workbook</title>
-<style>
- :root{--ink:#1d2330;--muted:#5b6678;--accent:#2557a7;--accent2:#e8632a;--bg:#f4f6fb;--card:#fff;--line:#d3dae8;
-   --good:#1f8a4c;--soft:#eef3fb;--fs:1}
- :root.hc{--ink:#000;--muted:#000;--accent:#0030c0;--accent2:#b03000;--bg:#fff;--card:#fff;--line:#000;--good:#006b2e;--soft:#fff}
- *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);
-   font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;line-height:1.45;font-size:calc(1rem*var(--fs));
-   -webkit-text-size-adjust:100%;padding-bottom:40px}
- header.top{position:sticky;top:0;z-index:5;background:var(--accent);color:#fff;padding:10px 14px;
-   display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
- header.top h1{margin:0;font-size:calc(1.2rem*var(--fs))}
- .tools{display:flex;gap:6px;flex-wrap:wrap}
- .tools button{font-family:inherit;cursor:pointer;border:0;border-radius:8px;padding:7px 10px;font-weight:700;
-   background:rgba(255,255,255,.2);color:#fff;font-size:calc(.85rem*var(--fs))}
- .tools button.pdf{background:#fff;color:var(--accent)}
- .wrap{max-width:780px;margin:0 auto;padding:14px}
- .namebar{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);
-   border-radius:10px;padding:10px 12px;margin-bottom:10px}
- .namebar label{font-weight:700} .namebar input{flex:1;font-family:inherit;font-size:calc(1rem*var(--fs));
-   padding:7px 9px;border:1px solid var(--line);border-radius:7px}
- .intro{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
- .intro b{color:var(--accent)}
- .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;break-inside:avoid}
- .step>h2{margin:0 0 4px;font-size:calc(1.1rem*var(--fs));display:flex;align-items:center;gap:8px}
- .badge{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
-   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem}
- .step .how{color:var(--muted);font-size:calc(.95rem*var(--fs));margin:0 0 10px}
- label.f{display:block;font-weight:700;font-size:calc(.95rem*var(--fs));margin:8px 0 3px}
- input[type=text]{font-family:inherit;font-size:calc(1rem*var(--fs));padding:8px 9px;border:1px solid var(--line);
-   border-radius:7px;background:#fff;color:var(--ink);width:100%}
- textarea{font-family:inherit;font-size:calc(1rem*var(--fs));padding:8px 9px;border:1px solid var(--line);
-   border-radius:7px;background:#fff;color:var(--ink);width:100%;resize:vertical;min-height:52px}
- .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
- .chip{cursor:pointer;border:1px solid var(--accent);color:var(--accent);background:#fff;border-radius:999px;
-   padding:5px 11px;font-size:calc(.85rem*var(--fs));font-weight:700}
- table.data{width:100%;border-collapse:collapse;margin-top:6px}
- table.data th{font-size:calc(.85rem*var(--fs));color:var(--muted);text-align:left;padding:2px 4px}
- table.data td{padding:2px 4px}
- table.data td.n{width:34px;color:var(--muted);text-align:center;font-weight:700}
- table.data input{padding:6px 8px}
- .count{margin-top:8px;font-weight:700;color:var(--good)}
- .btn{cursor:pointer;border:0;border-radius:9px;padding:9px 14px;font-weight:800;font-family:inherit;
-   background:var(--accent2);color:#fff;font-size:calc(.95rem*var(--fs))}
- .btn.alt{background:var(--accent)}
- .sorted{margin-top:8px;background:var(--soft);border:1px dashed var(--line);border-radius:8px;padding:8px 10px;
-   font-weight:700;min-height:20px;word-spacing:4px}
- .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
- @media(max-width:560px){.three{grid-template-columns:1fr}}
- .mbox{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px}
- .mbox h3{margin:0 0 4px;font-size:calc(1rem*var(--fs));color:var(--accent)}
- .mbox .lab{font-size:calc(.8rem*var(--fs));color:var(--muted);margin:6px 0 2px}
- .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
- @media(max-width:560px){.row2{grid-template-columns:1fr}}
- #chart{width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:8px}
- .charttitle{font-weight:800;text-align:center;margin:8px 0 2px}
- .share label{display:inline-flex;align-items:center;gap:7px;margin:6px 14px 6px 0;font-weight:700;cursor:pointer}
- .share input{width:20px;height:20px}
- footer{color:var(--muted);text-align:center;margin-top:24px;font-size:calc(.82rem*var(--fs))}
- @media print{
-   @page{margin:12mm}
-   header.top{position:static;background:#fff;color:#000;border-bottom:2px solid #000}
-   .tools{display:none!important}
-   body{background:#fff}
-   .step,.intro,.namebar{break-inside:avoid;border-color:#999}
-   .btn,.chips{display:none!important}
-   .sorted{background:#f2f2f2}
- }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Detectives — Workbook</title>
+  <style>
+    :root {
+      --ink: #1f2937;
+      --muted: #58657b;
+      --accent: #244e9a;
+      --accent-2: #e76b2d;
+      --bg: #f4f8ff;
+      --card: #ffffff;
+      --soft: #edf4ff;
+      --line: #dfeaf8;
+      --good: #1f7f4a;
+      --shadow: 0 10px 24px rgba(19, 42, 102, 0.10);
+      --fs: 1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      line-height: 1.45;
+      font-size: calc(1rem * var(--fs));
+      -webkit-text-size-adjust: 100%;
+      padding-bottom: 40px;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(135deg, var(--accent) 0%, #2e67c3 100%);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .header-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+    }
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tools button {
+      appearance: none;
+      border: 0;
+      border-radius: 10px;
+      padding: 7px 10px;
+      background: rgba(255,255,255,.18);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .tools button.pdf {
+      background: #fff;
+      color: var(--accent);
+    }
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 18px 16px 0;
+    }
+    .namebar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 18px rgba(19, 42, 102, 0.04);
+    }
+    .namebar label {
+      font-weight: 800;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .namebar input {
+      width: 100%;
+      font: inherit;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .intro {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+    .intro b { color: var(--accent); }
+    .step {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      box-shadow: 0 8px 18px rgba(19, 42, 102, 0.04);
+    }
+    .step h2 {
+      margin: 0 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+    }
+    .badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: .95rem;
+    }
+    .how {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: .96rem;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--ink);
+    }
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    label.field {
+      display: block;
+      font-weight: 800;
+      margin: 8px 0 4px;
+      color: var(--ink);
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+    .chip {
+      border: 1px solid var(--accent);
+      background: #fff;
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 800;
+      font-size: .84rem;
+      cursor: pointer;
+    }
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table.data th, table.data td {
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      text-align: left;
+    }
+    table.data th {
+      color: var(--muted);
+      font-size: .85rem;
+      font-weight: 700;
+    }
+    .rownum {
+      width: 36px;
+      text-align: center;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .count {
+      margin-top: 8px;
+      color: var(--good);
+      font-weight: 800;
+    }
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-2) 0%, #ff8a44 100%);
+      color: #fff;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(231, 107, 45, 0.2);
+    }
+    .btn.alt {
+      background: linear-gradient(135deg, var(--accent) 0%, #2d66c5 100%);
+      box-shadow: 0 8px 18px rgba(36, 78, 154, 0.2);
+    }
+    .sorted {
+      margin-top: 10px;
+      background: var(--soft);
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 700;
+      min-height: 44px;
+      word-break: break-word;
+    }
+    .threecol {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mini-box {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .mini-box h3 {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+    .lab {
+      color: var(--muted);
+      font-size: .8rem;
+      margin-top: 6px;
+    }
+    .twocol {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    #chart {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      display: block;
+      margin-top: 10px;
+    }
+    .charttitle {
+      margin-top: 10px;
+      min-height: 24px;
+      text-align: center;
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+    .share label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-right: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .share input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+    footer {
+      text-align: center;
+      padding: 0 16px 28px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    @media (max-width: 680px) {
+      .threecol, .twocol { grid-template-columns: 1fr; }
+    }
+    @media print {
+      .header { position: static; }
+      .tools, .chip, .btn, .count { display: none !important; }
+      body { background: #fff; }
+      .header, .step, .intro, .namebar { box-shadow: none; }
+    }
+  </style>
 </head>
 <body>
-<header class="top">
-  <h1>🔎 Data Detectives — My Workbook</h1>
-  <div class="tools">
-    <button id="aMinus" title="Smaller text">A−</button>
-    <button id="aPlus" title="Bigger text">A+</button>
-    <button id="hc" title="High contrast">◐ Contrast</button>
-    <button id="reset" title="Clear my work">Reset</button>
-    <button id="printBtn" class="pdf">📄 Save as PDF</button>
-  </div>
-</header>
-<div class="wrap">
-  <div class="namebar"><label for="stuName">Detective name:</label><input type="text" id="stuName" data-k="_name" placeholder="Type your name"></div>
-
-  <div class="intro">
-    You are a <b>Data Detective</b>! Pick a question, make a plan, collect real data, and find out what it says.
-    Type your answers right here — your work <b>saves on this device</b> as you go. When you finish, click
-    <b>📄 Save as PDF</b> and send it to Mr. Martin.
-  </div>
-
-  <section class="step">
-    <h2><span class="badge">1</span> My Question</h2>
-    <p class="how">What do you want to find out? Pick an idea or write your own.</p>
-    <input type="text" id="q" data-k="q" placeholder="My question is…">
-    <div class="chips" id="chips"></div>
-  </section>
-
-  <section class="step">
-    <h2><span class="badge">2</span> My Collection Plan</h2>
-    <p class="how">Plan before you collect. A good plan gets you good data.</p>
-    <label class="f">What data will I collect?</label>
-    <input type="text" data-k="plan_what" placeholder="For example: how many pets each person has">
-    <label class="f">Who or where will it come from?</label>
-    <input type="text" data-k="plan_who" placeholder="For example: everyone in my class">
-    <label class="f">How many will I collect? (try for 10 or more)</label>
-    <input type="text" data-k="plan_num" placeholder="For example: 12">
-  </section>
-
-  <section class="step">
-    <h2><span class="badge">3</span> My Data</h2>
-    <p class="how">Collect your data over a few days. Write a label and a number on each line. Get <b>10 or more</b>.</p>
-    <table class="data"><thead><tr><th></th><th>Label (who or what)</th><th>Number</th></tr></thead>
-      <tbody id="rows"></tbody></table>
-    <div class="count" id="count">You have 0 numbers so far.</div>
-  </section>
-
-  <section class="step">
-    <h2><span class="badge">4</span> Put My Numbers in Order</h2>
-    <p class="how">This helps you find the middle. Click the button to line up your numbers from smallest to biggest.</p>
-    <button class="btn alt" id="sortBtn">↕ Put my numbers in order</button>
-    <div class="sorted" id="sorted">Your numbers in order will show here.</div>
-  </section>
-
-  <section class="step">
-    <h2><span class="badge">5</span> Find the Center: Mean, Median, Mode</h2>
-    <p class="how">You have <b><span id="n2">0</span></b> numbers. Show your work in each box.</p>
-    <div class="three">
-      <div class="mbox"><h3>Mean</h3><div class="lab">Add them all, then divide by how many.</div>
-        <div class="lab">Answer:</div><input type="text" data-k="mean" placeholder="mean =">
-        <div class="lab">My work:</div><textarea data-k="meanwork"></textarea></div>
-      <div class="mbox"><h3>Median</h3><div class="lab">The middle number (in order).</div>
-        <div class="lab">Answer:</div><input type="text" data-k="median" placeholder="median =">
-        <div class="lab">My work:</div><textarea data-k="medianwork"></textarea></div>
-      <div class="mbox"><h3>Mode</h3><div class="lab">The number that shows up most.</div>
-        <div class="lab">Answer:</div><input type="text" data-k="mode" placeholder="mode =">
-        <div class="lab">My work:</div><textarea data-k="modework"></textarea></div>
+  <header class="header">
+    <div class="header-inner">
+      <h1>🔎 Data Detectives — My Workbook</h1>
+      <div class="tools">
+        <button id="minus">A−</button>
+        <button id="plus">A+</button>
+        <button id="contrast">◐ Contrast</button>
+        <button id="reset">Reset</button>
+        <button id="printBtn" class="pdf">📄 Save as PDF</button>
+      </div>
     </div>
-  </section>
+  </header>
 
-  <section class="step">
-    <h2><span class="badge">6</span> Round &amp; Estimate</h2>
-    <div class="row2">
-      <div><p class="how">Round your <b>mean</b> to the nearest whole number.</p>
-        <input type="text" data-k="round" placeholder="My mean rounds to about…"></div>
-      <div><p class="how">Write one <b>“about”</b> sentence about your data.</p>
-        <input type="text" data-k="estimate" placeholder="About ___ of us…"></div>
+  <div class="wrap">
+    <div class="namebar">
+      <label for="stuName">Detective name:</label>
+      <input type="text" id="stuName" data-k="_name" placeholder="Type your name">
     </div>
-  </section>
 
-  <section class="step">
-    <h2><span class="badge">7</span> Make My Chart</h2>
-    <p class="how">Give your chart a title. Your bars are made from your data above — no drawing needed!</p>
-    <input type="text" id="ctitle" data-k="ctitle" placeholder="Chart title…">
-    <div class="charttitle" id="ctitleShow"></div>
-    <svg id="chart" viewBox="0 0 700 320" role="img" aria-label="Your bar chart"></svg>
-    <button class="btn" id="redraw">↻ Update my chart</button>
-  </section>
+    <div class="intro">
+      You are a <b>Data Detective</b>! Pick a question, make a plan, collect real data, and find out what it says. Type your answers right here and use <b>Save as PDF</b> when you are done.
+    </div>
 
-  <section class="step">
-    <h2><span class="badge">8</span> My Data Story</h2>
-    <p class="how">Tell what your data shows. Use 2–3 sentences.</p>
-    <div class="lab" style="color:var(--muted);font-size:.85rem">What did you find out?</div>
-    <textarea data-k="found"></textarea>
-    <div class="lab" style="color:var(--muted);font-size:.85rem;margin-top:6px">What surprised you, or what would you ask next?</div>
-    <textarea data-k="next"></textarea>
-  </section>
+    <section class="step">
+      <h2><span class="badge">1</span> My Question</h2>
+      <p class="how">What do you want to find out? Pick an idea or write your own.</p>
+      <input type="text" id="q" data-k="q" placeholder="My question is…">
+      <div class="chips" id="chips"></div>
+    </section>
 
-  <section class="step share">
-    <h2><span class="badge">9</span> How I Will Share</h2>
-    <p class="how">Pick how you want to show your data story. You present on Nov 10 or 11.</p>
-    <label><input type="checkbox" data-k="s_poster"> Make a poster</label>
-    <label><input type="checkbox" data-k="s_slides"> Make a slideshow</label>
-    <label><input type="checkbox" data-k="s_talk"> Give a short talk</label>
-    <label><input type="checkbox" data-k="s_other"> Another way (ask Mr. Martin)</label>
-  </section>
+    <section class="step">
+      <h2><span class="badge">2</span> My Collection Plan</h2>
+      <p class="how">Plan before you collect. A good plan gets you good data.</p>
+      <label class="field">What data will I collect?</label>
+      <input type="text" data-k="plan_what" placeholder="For example: how many pets each person has">
+      <label class="field">Who or where will it come from?</label>
+      <input type="text" data-k="plan_who" placeholder="For example: everyone in my class">
+      <label class="field">How many will I collect? (try for 10 or more)</label>
+      <input type="text" data-k="plan_num" placeholder="For example: 12">
+    </section>
 
-  <footer>Data Detectives · Talcott Mountain Academy · Pre-Algebra</footer>
-</div>
+    <section class="step">
+      <h2><span class="badge">3</span> My Data</h2>
+      <p class="how">Collect your data over a few days. Write a label and number on each line. Get 10 or more.</p>
+      <table class="data">
+        <thead>
+          <tr><th></th><th>Label (who or what)</th><th>Number</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="count" id="count">You have 0 numbers so far.</div>
+    </section>
 
-<script>
-(function(){
- "use strict";
- var KEY="data_detective_v2";
- function $(id){return document.getElementById(id);}
+    <section class="step">
+      <h2><span class="badge">4</span> Put My Numbers in Order</h2>
+      <p class="how">This helps you find the middle. Click the button to line up the numbers from smallest to biggest.</p>
+      <button class="btn alt" id="sortBtn">↕ Put my numbers in order</button>
+      <div class="sorted" id="sorted">Your numbers in order will show here.</div>
+    </section>
 
- var IDEAS=["How many pets do we have?","Favorite kind of animal?","Minutes we read each night?",
-   "Favorite video game?","How tall are we (cm)?","How many siblings?","Favorite season?","Cups of water a day?"];
- var chips=$('chips');
- IDEAS.forEach(function(t){var b=document.createElement('button');b.className='chip';b.type='button';b.textContent=t;
-   b.onclick=function(){$('q').value=t;save();};chips.appendChild(b);});
+    <section class="step">
+      <h2><span class="badge">5</span> Find the Center: Mean, Median, Mode</h2>
+      <p class="how">You have <b><span id="n2">0</span></b> numbers. Show your work in each box.</p>
+      <div class="threecol">
+        <div class="mini-box">
+          <h3>Mean</h3>
+          <div class="lab">Add them all, then divide by how many.</div>
+          <div class="lab">Answer:</div>
+          <input type="text" data-k="mean" placeholder="mean =">
+          <div class="lab">My work:</div>
+          <textarea data-k="meanwork"></textarea>
+        </div>
 
- var ROWS=12, rows=$('rows');
- for(var i=1;i<=ROWS;i++){
-   var tr=document.createElement('tr');
-   tr.innerHTML='<td class="n">'+i+'</td>'+
-     '<td><input type="text" data-k="lbl'+i+'" placeholder="label"></td>'+
-     '<td><input type="text" inputmode="decimal" data-k="val'+i+'" placeholder="number"></td>';
-   rows.appendChild(tr);
- }
+        <div class="mini-box">
+          <h3>Median</h3>
+          <div class="lab">The middle number in order.</div>
+          <div class="lab">Answer:</div>
+          <input type="text" data-k="median" placeholder="median =">
+          <div class="lab">My work:</div>
+          <textarea data-k="medianwork"></textarea>
+        </div>
 
- function nums(){
-   var out=[];
-   for(var i=1;i<=ROWS;i++){var el=document.querySelector('[data-k="val'+i+'"]');
-     if(el&&el.value.trim()!==''){var v=parseFloat(el.value);if(!isNaN(v))out.push(v);}}
-   return out;
- }
- function data(){
-   var out=[];
-   for(var i=1;i<=ROWS;i++){var lv=document.querySelector('[data-k="lbl'+i+'"]'),vv=document.querySelector('[data-k="val'+i+'"]');
-     var v=vv&&vv.value.trim()!==''?parseFloat(vv.value):NaN;
-     if(!isNaN(v))out.push({label:(lv&&lv.value.trim())||('#'+i), num:v});}
-   return out;
- }
- function updateCount(){var n=nums().length;
-   $('count').textContent='You have '+n+' number'+(n===1?'':'s')+' so far.'+(n<10?' (Try for 10 or more!)':' Nice!');
-   $('n2').textContent=n;}
+        <div class="mini-box">
+          <h3>Mode</h3>
+          <div class="lab">The number that shows up most.</div>
+          <div class="lab">Answer:</div>
+          <input type="text" data-k="mode" placeholder="mode =">
+          <div class="lab">My work:</div>
+          <textarea data-k="modework"></textarea>
+        </div>
+      </div>
+    </section>
 
- function sortNums(){
-   var a=nums().slice().sort(function(x,y){return x-y;});
-   $('sorted').textContent = a.length? a.join('   ') : 'Add some numbers first, then click again.';
- }
- $('sortBtn').onclick=sortNums;
+    <section class="step">
+      <h2><span class="badge">6</span> Round & Estimate</h2>
+      <div class="twocol">
+        <div>
+          <p class="how">Round your mean to the nearest whole number.</p>
+          <input type="text" data-k="round" placeholder="My mean rounds to about…">
+        </div>
+        <div>
+          <p class="how">Write one “about” sentence about your data.</p>
+          <input type="text" data-k="estimate" placeholder="About ___ of us…">
+        </div>
+      </div>
+    </section>
 
- function drawChart(){
-   var d=data(), svg=$('chart'), W=700,H=320, padL=40,padB=70,padT=14,padR=14;
-   $('ctitleShow').textContent=$('ctitle').value||'';
-   while(svg.firstChild) svg.removeChild(svg.firstChild);
-   function el(t,a){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in a)e.setAttribute(k,a[k]);return e;}
-   if(!d.length){var tx=el('text',{x:W/2,y:H/2,'text-anchor':'middle','font-size':16,fill:'#8a93a6'});
-     tx.textContent='Add data above, then click “Update my chart”.';svg.appendChild(tx);return;}
-   var max=Math.max.apply(null,d.map(function(o){return o.num;}));max=max<=0?1:max;
-   var plotW=W-padL-padR, plotH=H-padT-padB, bw=plotW/d.length, colors=['#2557a7','#e8632a','#1f8a4c','#7a54d6','#d81b60','#00838f'];
-   svg.appendChild(el('line',{x1:padL,y1:padT,x2:padL,y2:H-padB,stroke:'#99a2b4','stroke-width':1}));
-   svg.appendChild(el('line',{x1:padL,y1:H-padB,x2:W-padR,y2:H-padB,stroke:'#99a2b4','stroke-width':1}));
-   d.forEach(function(o,i){
-     var h=Math.round(o.num/max*plotH), x=padL+i*bw+bw*0.15, y=H-padB-h, w=bw*0.7;
-     svg.appendChild(el('rect',{x:x,y:y,width:w,height:h,rx:4,fill:colors[i%colors.length]}));
-     var vt=el('text',{x:x+w/2,y:y-4,'text-anchor':'middle','font-size':13,'font-weight':'bold',fill:'#1d2330'});vt.textContent=o.num;svg.appendChild(vt);
-     var lt=el('text',{x:x+w/2,y:H-padB+16,'text-anchor':'end','font-size':12,fill:'#4a4a4a',transform:'rotate(-35 '+(x+w/2)+' '+(H-padB+16)+')'});
-     lt.textContent=o.label.length>12?o.label.slice(0,12)+'…':o.label;svg.appendChild(lt);
-   });
- }
- $('redraw').onclick=drawChart;
+    <section class="step">
+      <h2><span class="badge">7</span> Make My Chart</h2>
+      <p class="how">Give your chart a title. Your bars are made from your data above.</p>
+      <input type="text" id="ctitle" data-k="ctitle" placeholder="Chart title…">
+      <div class="charttitle" id="ctitleShow"></div>
+      <svg id="chart" viewBox="0 0 700 320" role="img" aria-label="Bar chart"></svg>
+      <div style="margin-top:10px;"><button class="btn" id="redraw">↻ Update my chart</button></div>
+    </section>
 
- document.addEventListener('input',function(e){
-   if(e.target.closest('#rows')){updateCount();drawChart();}
-   if(e.target.id==='ctitle'){ $('ctitleShow').textContent=$('ctitle').value||''; }
- },true);
+    <section class="step">
+      <h2><span class="badge">8</span> My Data Story</h2>
+      <p class="how">Tell what your data shows. Use 2–3 sentences.</p>
+      <div class="lab">What did you find out?</div>
+      <textarea data-k="found"></textarea>
+      <div class="lab">What surprised you or what would you ask next?</div>
+      <textarea data-k="next"></textarea>
+    </section>
 
- function save(){try{var o={};document.querySelectorAll('[data-k]').forEach(function(el){
-   if(el.type==='checkbox')o[el.dataset.k]=el.checked;else o[el.dataset.k]=el.value;});
-   localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}}
- function load(){try{var raw=localStorage.getItem(KEY);if(!raw)return;var o=JSON.parse(raw);
-   document.querySelectorAll('[data-k]').forEach(function(el){var v=o[el.dataset.k];if(v===undefined)return;
-     if(el.type==='checkbox')el.checked=!!v;else el.value=v;});}catch(e){}}
- document.addEventListener('input',save,true);
- document.addEventListener('change',save,true);
- load();updateCount();drawChart();
+    <section class="step share">
+      <h2><span class="badge">9</span> How I Will Share</h2>
+      <p class="how">Pick how you want to show your data story.</p>
+      <label><input type="checkbox" data-k="s_poster"> Make a poster</label>
+      <label><input type="checkbox" data-k="s_slides"> Make a slideshow</label>
+      <label><input type="checkbox" data-k="s_talk"> Give a short talk</label>
+      <label><input type="checkbox" data-k="s_other"> Another way</label>
+    </section>
 
- var fs=1;function ap(){document.documentElement.style.setProperty('--fs',fs.toFixed(2));try{localStorage.setItem('dd_fs',fs);}catch(e){}}
- try{var s=parseFloat(localStorage.getItem('dd_fs'));if(s){fs=s;ap();}}catch(e){}
- try{if(localStorage.getItem('dd_hc')==='1')document.documentElement.classList.add('hc');}catch(e){}
- $('aPlus').onclick=function(){fs=Math.min(1.6,fs+0.1);ap();};
- $('aMinus').onclick=function(){fs=Math.max(0.85,fs-0.1);ap();};
- $('hc').onclick=function(){var on=document.documentElement.classList.toggle('hc');try{localStorage.setItem('dd_hc',on?'1':'0');}catch(e){};
- };
- $('printBtn').onclick=function(){try{var nm=($('stuName').value||'').trim();document.title=nm?(nm+' - Data Detectives'):'Data Detectives';}catch(e){}drawChart();window.print();};
- $('reset').onclick=function(){if(confirm('Clear everything you typed on this device?')){try{localStorage.removeItem(KEY);}catch(e){}location.reload();}};
-})();
-</script>
+    <footer>Data Detectives · Talcott Mountain Academy · Pre-Algebra</footer>
+  </div>
+
+  <script>
+    (function () {
+      const KEY = 'data_detective_v2';
+      const ROWS = 12;
+      const rows = document.getElementById('rows');
+      const chips = document.getElementById('chips');
+      const ideas = [
+        'How many pets do we have?',
+        'Favorite kind of animal?',
+        'Minutes we read each night?',
+        'Favorite video game?',
+        'How tall are we (cm)?',
+        'How many siblings?',
+        'Favorite season?',
+        'Cups of water a day?'
+      ];
+
+      for (let i = 1; i <= ROWS; i++) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="rownum">${i}</td><td><input type="text" data-k="lbl${i}" placeholder="label"></td><td><input type="text" inputmode="decimal" data-k="val${i}" placeholder="number"></td>`;
+        rows.appendChild(tr);
+      }
+
+      ideas.forEach((idea) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip';
+        btn.textContent = idea;
+        btn.addEventListener('click', () => {
+          document.getElementById('q').value = idea;
+          save();
+        });
+        chips.appendChild(btn);
+      });
+
+      function allNumbers() {
+        const out = [];
+        for (let i = 1; i <= ROWS; i++) {
+          const el = document.querySelector(`[data-k="val${i}"]`);
+          if (!el) continue;
+          const value = el.value.trim();
+          if (!value) continue;
+          const num = Number(value);
+          if (!Number.isNaN(num)) out.push(num);
+        }
+        return out;
+      }
+
+      function dataList() {
+        const out = [];
+        for (let i = 1; i <= ROWS; i++) {
+          const labelEl = document.querySelector(`[data-k="lbl${i}"]`);
+          const valueEl = document.querySelector(`[data-k="val${i}"]`);
+          if (!valueEl) continue;
+          const value = valueEl.value.trim();
+          if (!value) continue;
+          const num = Number(value);
+          if (Number.isNaN(num)) continue;
+          out.push({
+            label: labelEl && labelEl.value.trim() ? labelEl.value.trim() : `#${i}`,
+            num
+          });
+        }
+        return out;
+      }
+
+      function updateCount() {
+        const n = allNumbers().length;
+        document.getElementById('count').textContent = `You have ${n} number${n === 1 ? '' : 's'} so far.${n < 10 ? ' (Try for 10 or more!)' : ' Nice!'}`;
+        document.getElementById('n2').textContent = String(n);
+      }
+
+      function sortNumbers() {
+        const sorted = allNumbers().slice().sort((a, b) => a - b);
+        document.getElementById('sorted').textContent = sorted.length ? sorted.join('   ') : 'Add some numbers first, then click again.';
+      }
+
+      function drawChart() {
+        const d = dataList();
+        const svg = document.getElementById('chart');
+        const ctitle = document.getElementById('ctitleShow');
+        const W = 700, H = 320, left = 40, right = 20, top = 18, bottom = 70;
+        ctitle.textContent = document.getElementById('ctitle').value || '';
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        const make = (tag, attrs) => {
+          const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+          Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+          return el;
+        };
+
+        if (!d.length) {
+          const t = make('text', { x: W / 2, y: H / 2, 'text-anchor': 'middle', 'font-size': 16, fill: '#8a93a6' });
+          t.textContent = 'Add data above, then click “Update my chart”.';
+          svg.appendChild(t);
+          return;
+        }
+
+        const max = Math.max(...d.map(item => item.num), 1);
+        const plotWidth = W - left - right;
+        const plotHeight = H - top - bottom;
+        const barWidth = plotWidth / d.length;
+        const palette = ['#244e9a', '#e76b2d', '#1f7f4a', '#7d5de0', '#d9335a', '#0a9ea7'];
+
+        svg.appendChild(make('line', { x1: left, y1: top, x2: left, y2: H - bottom, stroke: '#9ca8b8', 'stroke-width': 1 }));
+        svg.appendChild(make('line', { x1: left, y1: H - bottom, x2: W - right, y2: H - bottom, stroke: '#9ca8b8', 'stroke-width': 1 }));
+
+        d.forEach((item, index) => {
+          const barHeight = (item.num / max) * plotHeight;
+          const x = left + index * barWidth + barWidth * 0.15;
+          const y = H - bottom - barHeight;
+          const width = barWidth * 0.7;
+          const rect = make('rect', { x, y, width, height: barHeight, rx: 4, fill: palette[index % palette.length] });
+          svg.appendChild(rect);
+
+          const valueText = make('text', { x: x + width / 2, y: y - 4, 'text-anchor': 'middle', 'font-size': 12, fill: '#1f2937', 'font-weight': 'bold' });
+          valueText.textContent = item.num;
+          svg.appendChild(valueText);
+
+          const labelText = make('text', {
+            x: x + width / 2,
+            y: H - bottom + 18,
+            'text-anchor': 'end',
+            'font-size': 11,
+            fill: '#4f5868',
+            transform: `rotate(-35 ${x + width / 2} ${H - bottom + 18})`
+          });
+          const text = item.label.length > 12 ? item.label.slice(0, 12) + '…' : item.label;
+          labelText.textContent = text;
+          svg.appendChild(labelText);
+        });
+      }
+
+      document.getElementById('sortBtn').addEventListener('click', sortNumbers);
+      document.getElementById('redraw').addEventListener('click', drawChart);
+
+      document.addEventListener('input', (event) => {
+        if (event.target.closest('#rows')) {
+          updateCount();
+          drawChart();
+        }
+        if (event.target.id === 'ctitle') {
+          document.getElementById('ctitleShow').textContent = event.target.value || '';
+        }
+      }, true);
+
+      function save() {
+        const data = {};
+        document.querySelectorAll('[data-k]').forEach((el) => {
+          if (el.type === 'checkbox') {
+            data[el.dataset.k] = el.checked;
+          } else {
+            data[el.dataset.k] = el.value;
+          }
+        });
+        try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+      }
+
+      function load() {
+        try {
+          const raw = localStorage.getItem(KEY);
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          document.querySelectorAll('[data-k]').forEach((el) => {
+            if (Object.prototype.hasOwnProperty.call(data, el.dataset.k)) {
+              const value = data[el.dataset.k];
+              if (el.type === 'checkbox') {
+                el.checked = !!value;
+              } else {
+                el.value = value;
+              }
+            }
+          });
+        } catch (e) {}
+      }
+
+      document.addEventListener('input', save, true);
+      document.addEventListener('change', save, true);
+      load();
+      updateCount();
+      drawChart();
+
+      const root = document.documentElement;
+      let fs = 1;
+      try {
+        const saved = Number(localStorage.getItem('dd_fs'));
+        if (!Number.isNaN(saved)) fs = saved;
+      } catch (e) {}
+      const applyFontSize = () => {
+        root.style.setProperty('--fs', String(fs));
+        document.body.style.fontSize = `${fs}rem`;
+        try { localStorage.setItem('dd_fs', String(fs)); } catch (e) {}
+      };
+      document.getElementById('plus').addEventListener('click', () => {
+        fs = Math.min(1.5, fs + 0.1);
+        applyFontSize();
+      });
+      document.getElementById('minus').addEventListener('click', () => {
+        fs = Math.max(0.85, fs - 0.1);
+        applyFontSize();
+      });
+      document.getElementById('contrast').addEventListener('click', () => {
+        root.classList.toggle('high-contrast');
+      });
+      document.getElementById('printBtn').addEventListener('click', () => {
+        const name = (document.getElementById('stuName').value || '').trim();
+        document.title = name ? `${name} - Data Detectives` : 'Data Detectives';
+        drawChart();
+        window.print();
+      });
+      document.getElementById('reset').addEventListener('click', () => {
+        if (confirm('Clear everything you typed on this device?')) {
+          try { localStorage.removeItem(KEY); } catch (e) {}
+          location.reload();
+        }
+      });
+      applyFontSize();
+    })();
+  </script>
 </body>
 </html>
